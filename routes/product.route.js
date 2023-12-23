@@ -4,8 +4,13 @@ const router = express.Router();
 const Products = require('../models/product.model');
 
 router.get('/', async(req, res)=>{
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.pageSize) || 10;
     try {
-        const products = await Products.find({});
+        const products = await Products.find({})
+        .skip((page - 1) * pageSize)
+        .limit(pageSize)
+        .exec();
         res.status(200).json(products);
     } catch (error) {
         res.status(500).json({message: error.message})
