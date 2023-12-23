@@ -3,11 +3,13 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const app = express();
 const Products = require('./models/product.model');
-const producRoute = require('./routes/product.route')
+const producRoute = require('./routes/product.route');
+const cors = require('cors');
 
 dotenv.config();
 
 app.use(express.json());
+app.use(cors());
 
 // routes
 app.get('/', (req, res)=>{
