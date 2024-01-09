@@ -3,10 +3,17 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const app = express();
 const Products = require('./models/product.model');
-const producRoute = require('./routes/product.route');
+const productRoute = require('./routes/product.route');
 const cors = require('cors');
+const cloudinary = require('cloudinary').v2;
 
 dotenv.config();
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET
+});
 
 app.use(express.json());
 app.use(cors());
@@ -15,7 +22,7 @@ app.use(cors());
 app.get('/', (req, res)=>{
     res.send('hello ecommerce API');
 });
-app.use('/api/products', producRoute);
+app.use('/api/products', productRoute);
 
 
 // mongooose configuration
